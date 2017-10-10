@@ -14,6 +14,16 @@ It provides the following commands:
 
 - `npm-info`: show dependency info on package.json current line
 
+It also offers basic autocompletion in insert mode. While typing something like:
+
+```js
+const React = require('re[]
+```
+
+This plugin extracts all dependencies listed in the `package.json` of the current project.
+Everytime it detects `require('` or `require("` it will attempt to match the following word
+against this dependencies list. `import` statements are not supported yet.
+
 ## See also
 
 - [kakoune-ecmascript](https://github.com/Delapouite/kakoune-ecmascript)
