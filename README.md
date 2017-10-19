@@ -21,6 +21,7 @@ const React = require('re[]
 ```
 
 This plugin extracts all dependencies listed in the `package.json` of the current project.
+This list is merged with the node core modules list like `fs`, `path`…
 Everytime it detects `require('` or `require("` it will attempt to match the following word
 against this dependencies list. `import` statements are not supported yet.
 

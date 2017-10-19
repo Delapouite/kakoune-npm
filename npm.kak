@@ -11,14 +11,15 @@ def npm-info -docstring 'show dependency info on a package.json current line' %{
   }
 }
 
-decl -hidden str npm_deps
+decl -hidden str-list npm_deps
 decl -hidden completions npm_completions
 
 def npm-get-deps -docstring 'find deps in nearest package.json and populate npm_deps option' %{
   %sh{
     package_json="$(dirname $(npm root))/package.json"
     deps=$(cat "$package_json" | jq --raw-output '.dependencies | keys | join(":")')
-    echo "set global npm_deps %{$deps}"
+    core_deps=$(node -pe "require('repl')._builtinLibs.join(':')")
+    echo "set global npm_deps %{$deps:$core_deps}"
   }
 }
 
