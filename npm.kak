@@ -4,7 +4,6 @@ def npm-info -docstring 'show dependency info on a package.json current line' %{
   %sh{
     desc=$(curl -s http://registry.npmjs.org/"${kak_selection}"/latest | jq -r '(.name + "@" + .version + ": " + .description)')
     if [ -n "$desc" ]; then
-      echo "echo -debug $desc"
       printf '%s\n' "info -anchor $kak_cursor_line.$kak_cursor_column %^$desc^"
     else
       echo 'npm: no info available'
@@ -23,13 +22,13 @@ def npm-get-deps -docstring 'find deps in nearest package.json and populate npm_
   }
 }
 
-def -hidden npm-complete -params 1 %{
+def -hidden npm-complete -params 0..1 %{
   try %{
     set buffer npm_completions %sh{
       candidates=''
       pattern="$1"'*'
 
-      # filter deps according to given param 1
+      # filter deps according to given param 1 if it's provided
       while read dep; do
         case "$dep" in
           $pattern) candidates="$candidates:$dep||$dep";;
@@ -50,14 +49,31 @@ hook global WinSetOption filetype=(javascript|ecmascript) %{
   set window completers "option=npm_completions:%opt{completers}"
 
   hook -group npm_complete buffer InsertIdle .* %{
+    # these 'try' guard against expected 'nothing selected' errors, raised by their following exec command
+
     try %{
+
       # the m register stores the module name after "require('"
       eval -save-regs m %{
         exec -draft 'h<a-i>W 1srequire\([\'"]([^\'"]*)<ret> \"my'
         npm-complete %reg{m}
       }
+
     } catch %{
-      set buffer npm_completions ''
+
+      try %{
+
+        # before first char has been typed, it offers the whole (unfiltered) list of modules
+        eval %{
+          exec -draft 'h<a-i>W srequire\([\'"]<ret>'
+          npm-complete
+        }
+
+      } catch %{
+
+        set buffer npm_completions ''
+
+      }
     }
   }
 }
