@@ -51,6 +51,11 @@ hook global WinSetOption filetype=(javascript|ecmascript) %{
 
   hook -group npm_complete buffer InsertIdle .* %{
     # these 'try' guard against expected 'nothing selected' errors, raised by their following exec command
+    # 4 attempts:
+    # require('foo
+    # require('
+    # import foo from 'foo
+    # import foo from '
 
     try %{
 
@@ -60,21 +65,33 @@ hook global WinSetOption filetype=(javascript|ecmascript) %{
         npm-complete %reg{m}
       }
 
+    } catch %{ try %{
+
+      # before first char has been typed, it offers the whole (unfiltered) list of modules
+      eval %{
+        exec -draft 'h<a-i>W srequire\([\'"]<ret>'
+        npm-complete
+      }
+
+    } catch %{ try %{
+
+      eval -save-regs m %{
+        exec -draft 'xH 1simport(?:.*?)from [\'"]([^\'"]*)<ret> \"my'
+        npm-complete %reg{m}
+      }
+
+    } catch %{ try %{
+
+      eval %{
+        exec -draft 'xH simport(?:.*?)from [\'"]<ret>'
+        npm-complete
+      }
+
     } catch %{
-
-      try %{
-
-        # before first char has been typed, it offers the whole (unfiltered) list of modules
-        eval %{
-          exec -draft 'h<a-i>W srequire\([\'"]<ret>'
-          npm-complete
-        }
-
-      } catch %{
 
         set buffer npm_completions ''
 
-      }
-    }
-  }
+    } } } } # 1 per catch clause
+
+  } # hook
 }

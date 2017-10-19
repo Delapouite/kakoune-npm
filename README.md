@@ -20,10 +20,17 @@ It also offers basic autocompletion in insert mode. While typing something like:
 const React = require('re[]
 ```
 
+or
+
+```js
+import React from 're[]
+```
+
 This plugin extracts all dependencies listed in the `package.json` of the current project.
-This list is merged with the node core modules list like `fs`, `path`…
-Everytime it detects `require('` or `require("` it will attempt to match the following word
-against this dependencies list. `import` statements are not supported yet.
+This list is merged with the node core modules list like `fs`, `path`, `http`…
+
+Everytime it detects `require('`, or `import foo from '` it will attempt to match the following word
+against this dependencies list.
 
 ## See also
 
