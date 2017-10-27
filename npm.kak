@@ -11,6 +11,12 @@ def npm-info -docstring 'show dependency info on a package.json current line' %{
   }
 }
 
+def npm-update-latest -docstring 'update to package@latest on current line' %{
+  # select package name
+  exec <a-x>1s"(.*)":<ret>
+  %sh{ npm i "${kak_selection}@latest" < /dev/null > /dev/null 2>&1 & }
+}
+
 decl -hidden str-list npm_deps
 decl -hidden completions npm_completions
 

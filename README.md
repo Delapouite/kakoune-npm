@@ -13,6 +13,7 @@ To use the `npm-info` command, you need to have [jq](https://stedolan.github.io/
 It provides the following commands:
 
 - `npm-info`: show dependency info on package.json current line
+- `npm-update-latest`: update to package@latest on current line (bump major)
 
 It also offers basic autocompletion in insert mode. While typing something like:
 
