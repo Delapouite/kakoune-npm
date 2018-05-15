@@ -1,6 +1,6 @@
 # kakoune-npm
 
-[kakoune](http://kakoune.org) plugin to work with [npm](https://www.npmjs.com/), the JavaScript package manager.
+[kakoune](http://kakoune.org) plugin to work with [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com), the JavaScript package managers.
 
 ## Install
 
@@ -14,6 +14,7 @@ It provides the following commands:
 
 - `npm-info`: show dependency info on package.json current line
 - `npm-update-latest`: update to package@latest on current line (bump major)
+- `yarn-upgrade-latest`: upgrade to package@latest on current line (bump major)
 
 It also offers basic autocompletion in insert mode. While typing something like:
 
