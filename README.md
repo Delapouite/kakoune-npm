@@ -38,8 +38,9 @@ against this dependencies list.
 
 - [kakoune-ecmascript](https://github.com/Delapouite/kakoune-ecmascript)
 - [kakoune-typescript](https://github.com/atomrc/kakoune-typescript)
-- [kakoune-flow](https://github.com/Delapouite/kakoune-flow)
-- [kakoune-grasp](https://github.com/Delapouite/kakoune-grasp)
+- [kakoune-flow](https://github.com/Delapouite/kakoune-flow) - Flow type-checking and coverage
+- [kakoune-grasp](https://github.com/Delapouite/kakoune-grasp) - Text objects based on AST
+- [kakoune-goto-file](https://github.com/Delapouite/kakoune-goto-file) - Enhanced `gf` for `node_modules`
 
 ## Licence
 
