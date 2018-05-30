@@ -6,11 +6,6 @@ declare-option -hidden line-specs npm_flags
 
 # commands
 
-# grab the key in package.json
-define-command npm-select-package-name -hidden %{
-  execute-keys <a-x>1s"(.*)":<ret>
-}
-
 define-command npm-info -docstring 'show dependency info on a package.json current line' %{
   npm-select-package-name
   %sh{
@@ -42,7 +37,16 @@ define-command npm-get-deps -docstring 'find deps in nearest package.json and po
   }
 }
 
+define-command npm-edit-package-json -docstring 'open nearest package.json' %{
+  edit %sh{ echo "$(dirname $(npm root))/package.json" }
+}
+
 # hidden commands
+
+# grab the key in package.json
+define-command -hidden npm-select-package-name %{
+  execute-keys <a-x>1s"(.*)":<ret>
+}
 
 define-command -hidden npm-complete -params 0..1 %{
   try %{

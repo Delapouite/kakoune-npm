@@ -15,6 +15,7 @@ It provides the following commands:
 - `npm-info`: show dependency info on package.json current line
 - `npm-update-latest`: update to package@latest on current line (bump major)
 - `yarn-upgrade-latest`: upgrade to package@latest on current line (bump major)
+- `npm-edit-package-json`: open the nearest package.json
 
 It also offers basic autocompletion in insert mode. While typing something like:
 
