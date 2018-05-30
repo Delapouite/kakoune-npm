@@ -6,6 +6,7 @@ declare-option -hidden line-specs npm_flags
 
 # commands
 
+# grab the key in package.json
 define-command npm-select-package-name -hidden %{
   execute-keys <a-x>1s"(.*)":<ret>
 }
@@ -13,11 +14,11 @@ define-command npm-select-package-name -hidden %{
 define-command npm-info -docstring 'show dependency info on a package.json current line' %{
   npm-select-package-name
   %sh{
-    desc=$(curl -s http://registry.npmjs.org/"${kak_selection}"/latest | jq -r '(.name + "@" + .version + ": " + .description)')
+    desc=$(curl -s https://registry.npmjs.org/"$kak_selection"/latest | jq -r '(.name + "@" + .version + ": " + .description)')
     if [ -n "$desc" ]; then
       printf '%s\n' "info -anchor $kak_cursor_line.$kak_cursor_column %^$desc^"
     else
-      echo 'npm: no info available'
+      echo "echo -markup {Error}npm: no info available on registry for $kak_selection"
     fi
   }
 }
