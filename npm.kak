@@ -9,11 +9,11 @@ declare-option -hidden line-specs npm_flags
 define-command npm-info -docstring 'show dependency info on a package.json current line' %{
   npm-select-package-name
   evaluate-commands %sh{
-    desc=$(curl -s https://registry.npmjs.org/"$kak_selection"/latest | jq -r '(.name + "@" + .version + ": " + .description)')
+    desc=$(curl -s https://registry.npmjs.org/"$kak_selection" | jq -r '(.name + "@" + .["dist-tags"].latest + ": " + .description)')
     if [ -n "$desc" ]; then
       printf '%s\n' "info -anchor $kak_cursor_line.$kak_cursor_column %^$desc^"
     else
-      echo "echo -markup {Error}npm: no info available on registry for $kak_selection"
+      echo "fail npm: no info available on registry for $kak_selection"
     fi
   }
 }
@@ -127,3 +127,4 @@ hook global WinSetOption filetype=(javascript|ecmascript) %{
 
   } # hook
 }
+
