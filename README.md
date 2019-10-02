@@ -6,7 +6,7 @@
 
 Add `npm.kak` to your autoload dir: `~/.config/kak/autoload/`.
 
-To use the `npm-info` command, you need to have [jq](https://stedolan.github.io/jq/) on your system.
+To use the `npm-info` command, you need to have [curl](https://curl.haxx.se/) and [jq](https://stedolan.github.io/jq/) on your system.
 
 ## Usage
 
