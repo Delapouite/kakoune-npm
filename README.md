@@ -6,6 +6,12 @@
 
 Add `npm.kak` to your autoload dir: `~/.config/kak/autoload/`.
 
+Or via [plug.kak](https://github.com/andreyorst/plug.kak):
+
+```
+plug 'delapouite/kakoune-npm'
+```
+
 To use the `npm-info` command, you need to have [curl](https://curl.haxx.se/) and [jq](https://stedolan.github.io/jq/) on your system.
 
 ## Usage
